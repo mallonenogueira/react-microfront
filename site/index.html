@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root-button"></div>
+    <div id="root-map"></div>
+
+    <script
+      type="module"
+      onload="loadComponent()"
+      src="http://localhost:5173/src/site.tsx"
+    ></script>
+
+    <script
+      type="module"
+      onload="loadComponent()"
+      src="http://localhost:8081/site.js"
+    ></script>
+
+    <script>
+      function loadComponent() {
+        loadComponentButton();
+        loadComponentMap();
+      }
+
+      function loadComponentButton() {
+        const { update } = window.microfrontend.create({
+          element: document.querySelector("#root-button"),
+          component: "Button",
+          props: {
+            text: "Mallone Zero",
+          },
+        });
+
+        let numb = 1;
+
+        setInterval(() => {
+          update({
+            text: "Mallone " + Math.random(),
+          });
+        }, 1000);
+      }
+    </script>
+
+    <script>
+      function loadComponentMap() {
+        const { unmount } = window.microfrontend.create({
+          element: document.querySelector("#root-map"),
+          component: "Map",
+        });
+
+        setInterval(unmount, 10000);
+      }
+    </script>
+  </body>
+</html>
