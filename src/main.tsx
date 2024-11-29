@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Suspense } from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
-import { Map } from "./components/map";
 
-const ButtonLazy = React.lazy(() =>
+const Button = lazy(() =>
   import("./components/button").then((C) => ({
     default: C.Button,
   }))
 );
 
+const Map = lazy(() =>
+  import("./components/map").then((C) => ({
+    default: C.Map,
+  }))
+);
+
 const Components = {
-  Button: (...props: any) => (
-    <Suspense fallback={"loading"}>
-      <ButtonLazy {...props} />
-    </Suspense>
-  ),
-  Map: Map,
+  Button,
+  Map,
 };
 
 type DetailMicrofrontend<T> = {

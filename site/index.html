@@ -13,13 +13,13 @@
     <script
       type="module"
       onload="loadComponent()"
-      src="http://localhost:5173/src/site.tsx"
+      src="http://localhost:5173/src/main.tsx"
     ></script>
 
     <script
       type="module"
       onload="loadComponent()"
-      src="http://localhost:8081/site.js"
+      src="http://localhost:8081/main.js"
     ></script>
 
     <script>
@@ -33,7 +33,8 @@
           element: document.querySelector("#root-button"),
           component: "Button",
           props: {
-            text: "Mallone Zero",
+            text: "Button text 0",
+            onClick: () => alert("Click"),
           },
         });
 
@@ -41,7 +42,8 @@
 
         setInterval(() => {
           update({
-            text: "Mallone " + Math.random(),
+            text: "Button text " + Math.random(),
+            onClick: () => alert("Click"),
           });
         }, 1000);
       }

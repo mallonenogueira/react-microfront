@@ -1,10 +1,12 @@
 /// <reference types="vite/client" />
+
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
-import { libInjectCss } from "vite-plugin-lib-inject-css";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import svgr from "vite-plugin-svgr";
+import { injectJsHotReloadPlugin } from "./vite.plugin.hot";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,36 +17,27 @@ export default defineConfig({
     ),
   },
   plugins: [
+    injectJsHotReloadPlugin("main.tsx"),
     svgr(),
     react(),
     dts({
       exclude: ["node_modules", "**/*.stories.ts", "src/test", "**/*.test.tsx"],
     }),
-    libInjectCss(),
+    cssInjectedByJsPlugin(),
   ],
   build: {
-    target: "esnext",
-    outDir: "dist",
-    // lib: {
-    //   name: "site",
-    //   entry: {
-    //     site: resolve(__dirname, "src/site.tsx"),
-    //   },
-    //   formats: ["umd"],
-    // },
-    rollupOptions: {
-      input: {
-        site: resolve(__dirname, "src/site.tsx"),
+    lib: {
+      entry: {
+        main: resolve(__dirname, "src/main.tsx"),
       },
+      formats: ["es"],
+    },
+    rollupOptions: {
       output: {
-        format: "umd",
-        // entryFileNames: "[name]-[hash].js",
         entryFileNames: "[name].js",
         assetFileNames: "assets/[name][extname]",
       },
     },
   },
-  server: {
-    hmr: false,
-  },
+  server: {},
 });

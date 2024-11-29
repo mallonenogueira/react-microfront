@@ -1,14 +1,19 @@
 import styled from "styled-components";
 
-import Svg from '../assets/react.svg?react';
+import Svg from "../assets/react.svg?react";
+
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
 
 const StyledButton = styled.button`
-  background-color: #991a49;
+  background-color: red;
 `;
 
-export function Button({ text }: { text: string }) {
+export function Button({ text, onClick }: ButtonProps) {
   return (
-    <StyledButton>
+    <StyledButton onClick={onClick}>
       <Svg />
       {text}
     </StyledButton>
