@@ -3,15 +3,11 @@ import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 
 const Button = lazy(() =>
-  import("./components/button").then((C) => ({
-    default: C.Button,
-  }))
+  import("./components/button").then((C) => ({ default: C.Button }))
 );
 
 const Map = lazy(() =>
-  import("./components/map").then((C) => ({
-    default: C.Map,
-  }))
+  import("./components/map").then((C) => ({ default: C.Map }))
 );
 
 const Components = {
@@ -19,13 +15,13 @@ const Components = {
   Map,
 };
 
-type DetailMicrofrontend<T> = {
+type MicrofrontendComponent<T> = {
   component: keyof typeof Components;
   element: Element;
   props?: T;
 };
 
-export function create<T>(data: DetailMicrofrontend<T>) {
+export function create<T>(data: MicrofrontendComponent<T>) {
   const root = ReactDOM.createRoot(data.element);
   const Component = Components[data.component];
 
